@@ -1,0 +1,248 @@
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: #A41823;
+  padding: 10px 0;
+  border-radius: 6px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.tabs button.active {
+  background-color: #A41823;
+  color: white;
+}
+
+.tabs button:hover:not(.active) {
+  background-color: #bbb;
+}
+
+
+.book-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.book-form input[type="text"],
+.book-form select,
+.book-form input[type="file"] {
+  width: 90%;
+  max-width: 400px;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.book-form button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #ef3232;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.book-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.book-form button:hover:not(:disabled) {
+  background-color: #b30000;
+}
+
+.book-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.book-table thead {
+  background-color: #A41823;
+  color: white;
+}
+
+.book-table th, .book-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.book-table tbody tr:nth-child(odd) {
+  background-color: #f7f9fc;
+}
+
+.book-table tbody tr:nth-child(even) {
+  background-color: #e9eff5;
+}
+
+.book-table img {
+  max-width: 50px;
+  height: auto;
+}
+
+.book-table a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.book-table a:hover {
+  text-decoration: underline;
+}
+
+.small-btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-right: 5px;
+}
+
+.small-btn:first-child {
+  background-color: #28a745;
+}
+
+.small-btn:last-child {
+  background-color: #dc3545;
+}
+
+.small-btn:hover {
+  opacity: 0.85;
+}
+
+
+.search-input {
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  display: block;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: start; 
+  padding: 40px 20px; 
+  overflow-y: auto;
+}
+
+
+.modal {
+  background-color: white;
+  padding: 25px 30px 40px 30px; 
+  border-radius: 8px;
+  width: 40%;
+  max-height: 80%;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+
+.modal h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.modal input[type="text"],
+.modal select,
+.modal input[type="file"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-buttons button:first-child {
+  background-color: #b30000;
+  color: white;
+}
+
+.modal-buttons button:last-child {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-buttons button:hover {
+  opacity: 0.9;
+}
+
+.tab-content {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.tab-content h3 {
+  text-align: center;
+  color: #A41823;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}

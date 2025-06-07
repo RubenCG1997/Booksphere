@@ -1,0 +1,73 @@
+<app-navbar></app-navbar>
+<h2 class="title">Lista de Publishers</h2>
+
+<form (ngSubmit)="addPublisher()" #publisherForm="ngForm" style="margin-bottom: 20px;">
+  <input
+    type="text"
+    name="name"
+    [(ngModel)]="newPublisherName"
+    placeholder="Nombre del publisher"
+    required
+  />
+  <button type="submit" [disabled]="publisherForm.invalid">Agregar publisher</button>
+</form>
+
+<div style="text-align:center; margin-bottom: 15px;">
+  <input
+    type="text"
+    placeholder="Buscar publisher..."
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchChange()"
+    style="width: 250px; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"
+  />
+</div>
+
+<table *ngIf="filteredPublishers$ | async as publishers; else noPublishers">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let publisher of publishers">
+      <td>{{ publisher.uid }}</td>
+      <td>{{ publisher.name }}</td>
+      <td>
+        <button (click)="editPublisher(publisher)">Editar</button>
+        <button (click)="confirmDeletePublisher(publisher)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noPublishers>
+  <p>No hay publishers disponibles.</p>
+</ng-template>
+
+<div class="modal-backdrop" *ngIf="editingPublisher">
+  <div class="modal">
+    <h3>Editar Publisher</h3>
+    <input
+      type="text"
+      [(ngModel)]="editingPublisher.name"
+      placeholder="Nuevo nombre"
+    />
+    <div class="modal-buttons">
+      <button (click)="updatePublisher()">Guardar</button>
+      <button (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="publisherToDelete">
+  <div class="modal">
+    <h3>Confirmar Eliminación</h3>
+    <p>¿Estás seguro de que quieres eliminar al publisher <strong>{{ publisherToDelete.name }}</strong>?</p>
+    <div class="modal-buttons">
+      <button (click)="deletePublisher()">Eliminar</button>
+      <button (click)="cancelDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>

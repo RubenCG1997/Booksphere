@@ -1,0 +1,35 @@
+<div class="card-container">
+  <div class="card">
+    <img src="/assets/icon_app.png" alt="logo" class="card-logo" />
+    <h1>Iniciar Sesión</h1>
+
+    <form (ngSubmit)="loginWithEmail()" #loginForm="ngForm" class="login-form" novalidate>
+      <input
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      placeholder="Correo"
+      required
+      #emailInput="ngModel"
+      pattern="^[a-zA-Z0-9._%+-]+@booksphere\.com$"
+      />
+        <div *ngIf="emailInput.invalid && emailInput.touched" class="error">
+          El correo debe ser un email válido y terminar en <strong>&#64;booksphere.com</strong>
+        </div>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Contraseña"
+        required
+        minlength="6"
+        #passwordInput="ngModel"
+      />
+      <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error">
+        La contraseña debe tener al menos 6 caracteres
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+    </form>
+  </div>
+</div>

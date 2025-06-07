@@ -1,0 +1,72 @@
+name: booksphere
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.13.0
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  firebase_auth: ^5.5.3
+  google_sign_in: ^6.3.0
+  go_router: ^15.1.2
+  cloud_firestore: ^5.6.7
+  custom_rating_bar: ^3.0.0
+  dropdown_button2: ^2.3.9
+  internet_file: ^1.2.0
+  epub_view: ^3.2.0
+  flutter_launcher_icons: ^0.11.0
+  flutter_native_splash: ^2.2.16
+  shared_preferences: ^2.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  integration_test:
+    sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/splash.png"
+  adaptive_icon_background: "#A01423"
+  adaptive_icon_foreground: "assets/images/splash.png"
+  adaptive_icon_foreground_size: 120
+
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#A01423"
+  image: "assets/images/splash.png"
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/images/arrow_back.png
+    - assets/images/icon.png
+    - assets/images/google.png
+    - assets/images/default.jpg
+    - assets/images/cross.png
+    - assets/images/open_book.png
+    - assets/images/A_mi_madre-Rosalia_de_Castro-md.png
+    - assets/images/Aire_frio-H._P._Lovecraft-md.png
+    - assets/images/El_barril_de_amontillado-Allan_Poe_Edgar-md.png
+    - assets/images/El_clerigo_malvado-H._P._Lovecraft-md.png
+    - assets/images/El_escuerzo-Leopoldo_Lugones-md.png
+
+  fonts:
+    - family: Merriweather
+      fonts:
+        - asset: assets/fonts/Merriweather.ttf

@@ -1,0 +1,76 @@
+<app-navbar></app-navbar>
+<h2 class="title">Lista de Autores</h2>
+
+<form (ngSubmit)="addAuthor()" #authorForm="ngForm" style="margin-bottom: 20px;">
+  <input
+    type="text"
+    name="name"
+    [(ngModel)]="newAuthorName"
+    placeholder="Nombre del autor"
+    required
+  />
+  <button type="submit" [disabled]="authorForm.invalid">Agregar autor</button>
+</form>
+
+
+<div style="text-align:center; margin-bottom: 15px;">
+  <input
+    type="text"
+    placeholder="Buscar autor..."
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchChange()"
+    style="width: 250px; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"
+  />
+</div>
+
+<table *ngIf="filteredAuthors$ | async as authors; else noAuthors">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let author of authors">
+      <td>{{ author.uid }}</td>
+      <td>{{ author.name }}</td>
+      <td>
+        <button (click)="editAuthor(author)">Editar</button>
+        <button (click)="confirmDeleteAuthor(author)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noAuthors>
+  <p>No hay autores disponibles.</p>
+</ng-template>
+
+
+<div class="modal-backdrop" *ngIf="editingAuthor">
+  <div class="modal">
+    <h3>Editar Autor</h3>
+    <input
+      type="text"
+      [(ngModel)]="editingAuthor.name"
+      placeholder="Nuevo nombre"
+    />
+    <div class="modal-buttons">
+      <button (click)="updateAuthor()">Guardar</button>
+      <button (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-backdrop" *ngIf="authorToDelete">
+  <div class="modal">
+    <h3>Confirmar Eliminación</h3>
+    <p>¿Estás seguro de que quieres eliminar al autor <strong>{{ authorToDelete.name }}</strong>?</p>
+    <div class="modal-buttons">
+      <button (click)="deleteAuthor()">Eliminar</button>
+      <button (click)="cancelDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>

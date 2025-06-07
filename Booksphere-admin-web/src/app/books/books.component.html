@@ -1,0 +1,194 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <h2 class="title">Gestión de Libros</h2>
+
+  <!-- Botones para cambiar pestaña -->
+  <div class="tabs">
+    <button (click)="activeTab = 'create'" [class.active]="activeTab === 'create'">
+      Crear Libro
+    </button>
+    <button (click)="activeTab = 'manage'" [class.active]="activeTab === 'manage'">
+      Editar/Borrar Libro
+    </button>
+  </div>
+
+  <!-- Pestaña Crear Libro -->
+  <div *ngIf="activeTab === 'create'" class="tab-content">
+    <h3>Agregar nuevo libro</h3>
+    <form (ngSubmit)="addBook()" class="book-form">
+      <input
+        type="text"
+        [(ngModel)]="newBook.title"
+        name="title"
+        placeholder="Título"
+        required
+      />
+      <input
+        type="text"
+        [(ngModel)]="newBook.isbn"
+        name="isbn"
+        placeholder="ISBN"
+        required
+      />
+      <input
+        type="text"
+        [(ngModel)]="newBook.date"
+        name="date"
+        placeholder="Fecha (DD-MM-YYYY)"
+        required
+      />
+      <input
+        type="text"
+        [(ngModel)]="newBook.genre"
+        name="genre"
+        placeholder="Género"
+        required
+      />
+      <input
+        type="text"
+        [(ngModel)]="newBook.description"
+        name="description"
+        placeholder="Descripción"
+        required
+      />
+
+      <select [(ngModel)]="newBook.idAuthor" name="idAuthor" required>
+        <option value="" disabled selected>Selecciona Autor</option>
+        <option *ngFor="let author of authors$ | async" [value]="author.uid">
+          {{ author.name }}
+        </option>
+      </select>
+
+      <select [(ngModel)]="newBook.idPublisher" name="idPublisher" required>
+        <option value="Editorial" disabled selected>Selecciona Editorial</option>
+        <option *ngFor="let pub of publishers$ | async" [value]="pub.uid">
+          {{ pub.name }}
+        </option>
+      </select>
+
+      <label>Archivo EPUB:</label>
+      <input type="file" (change)="onEpubSelected($event)" required />
+      <label>Imagen de portada:</label>
+      <input type="file" (change)="onImgSelected($event)" required />
+
+      <button type="submit">Agregar Libro</button>
+    </form>
+  </div>
+
+  <!-- Pestaña Editar / Borrar Libro -->
+  <div *ngIf="activeTab === 'manage'" class="tab-content">
+    <input
+      type="text"
+      placeholder="Buscar por título..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      class="search-input"
+    />
+
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>ISBN</th>
+          <th>Fecha</th>
+          <th>Género</th>
+          <th>Autor</th>
+          <th>Editorial</th>
+          <th>Imagen</th>
+          <th>EPUB</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of filteredBooks$ | async">
+          <td>{{ book.title }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.date }}</td>
+          <td>{{ book.genre }}</td>
+          <td>{{ authorMap[book.idAuthor || ''] || 'Desconocido' }}</td>
+          <td>{{ publisherMap[book.idPublisher || ''] || 'Desconocido' }}</td>    
+          <td><img [src]="book.urlImg" alt="Portada" width="50" /></td>
+          <td><a [href]="book.urlEpub" target="_blank">Ver EPUB</a></td>
+          <td>
+            <button class="small-btn" (click)="editBook(book)">Editar</button>
+            <button class="small-btn" (click)="confirmDeleteBook(book)">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal para editar libro -->
+  <div *ngIf="editingBook" class="modal-backdrop">
+    <div class="modal">
+      <h3>Editar Libro</h3>
+      <form (ngSubmit)="updateBook()" class="book-form">
+        <input
+          type="text"
+          [(ngModel)]="editingBook.title"
+          name="editTitle"
+          required
+        />
+        <input
+          type="text"
+          [(ngModel)]="editingBook.isbn"
+          name="editIsbn"
+          required
+        />
+        <input
+          type="text"
+          [(ngModel)]="editingBook.date"
+          name="editDate"
+          required
+        />
+        <input
+          type="text"
+          [(ngModel)]="editingBook.genre"
+          name="editGenre"
+          required
+        />
+        <input
+          type="text"
+          [(ngModel)]="editingBook.description"
+          name="editDescription"
+          required
+        />
+
+        <select [(ngModel)]="editingBook.idAuthor" name="editAuthor" required>
+          <option value="" disabled>Selecciona Autor</option>
+          <option *ngFor="let author of authors$ | async" [value]="author.uid">
+            {{ author.name }}
+          </option>
+        </select>
+
+        <select [(ngModel)]="editingBook.idPublisher" name="editPublisher" required>
+          <option value="" disabled>Selecciona Editorial</option>
+          <option *ngFor="let pub of publishers$ | async" [value]="pub.uid">
+            {{ pub.name }}
+          </option>
+        </select>
+
+        <label>Cambiar EPUB (opcional):</label>
+        <input type="file" (change)="onEpubSelected($event)" />
+        <label>Cambiar imagen (opcional):</label>
+        <input type="file" (change)="onImgSelected($event)" />
+
+        <div class="modal-buttons">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="cancelEdit()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para confirmar borrado -->
+  <div *ngIf="bookToDelete" class="modal-backdrop">
+    <div class="modal">
+      <p>¿Seguro que quieres eliminar el libro "{{ bookToDelete.title }}"?</p>
+      <div class="modal-buttons">
+        <button (click)="deleteBook()">Sí, eliminar</button>
+        <button (click)="cancelDelete()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
